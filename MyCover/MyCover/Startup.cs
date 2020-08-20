@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using MyCover.Model.Entities;
 
 namespace MyCover
 {
@@ -52,6 +54,9 @@ namespace MyCover
                 config.AddPolicy(Policy.User, Policy.UserPolicy());
 
             });
+
+            //config DBcontext
+            services.AddDbContext<MyCoverDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyCoverDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
