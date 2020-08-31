@@ -18,10 +18,9 @@ namespace MyCover.Model.Entities
 
         public string AvartarLink { get; set; }
         
-        public bool Status { get; set; }
         [StringLength(30)]
         public string Role { get; set; }
         
-        public bool IsDelete { get; set; }
+        public bool Status { get; set; }
     }
 }
