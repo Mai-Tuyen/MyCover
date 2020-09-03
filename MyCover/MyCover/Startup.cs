@@ -17,7 +17,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyCover.Model.Entities;
 using MyCover.Service.IRepository;
+using MyCover.Service.IService;
 using MyCover.Service.Repository;
+using MyCover.Service.Service;
 
 namespace MyCover
 {
@@ -38,15 +40,15 @@ namespace MyCover
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt: Issuer"],
-                    ValidAudience = Configuration["Jwt: Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt: SecretKey"])),
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
                     ClockSkew = TimeSpan.Zero
                 };
             });
@@ -62,6 +64,9 @@ namespace MyCover
 
             //inject unitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //inject Service
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

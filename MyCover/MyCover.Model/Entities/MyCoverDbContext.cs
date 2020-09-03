@@ -7,7 +7,7 @@ namespace MyCover.Model.Entities
 {
     public class MyCoverDbContext : DbContext
     {
-        public MyCoverDbContext()
+        public MyCoverDbContext(DbContextOptions<MyCoverDbContext> options) : base(options)
         {
         }
         public DbSet<User> Users { get; set; }

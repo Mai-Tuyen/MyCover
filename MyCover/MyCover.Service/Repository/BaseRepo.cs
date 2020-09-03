@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyCover.Service.Repository
 {
@@ -19,7 +20,7 @@ namespace MyCover.Service.Repository
             this.dbSet = context.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
             if (filter != null)
