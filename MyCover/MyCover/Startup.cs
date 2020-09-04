@@ -36,6 +36,8 @@ namespace MyCover
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //add Authen
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -53,6 +55,8 @@ namespace MyCover
                 };
             });
 
+
+            //add author
             services.AddAuthorization(config => {
                 config.AddPolicy(Policy.Admin, Policy.AdminPolicy());
                 config.AddPolicy(Policy.User, Policy.UserPolicy());

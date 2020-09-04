@@ -47,8 +47,8 @@ namespace MyCover.Service.Service
             };
 
             var token = new JwtSecurityToken(
-                        issuer: configuration["Jwt: Issuer"],
-                        audience: configuration["Jwt: Audience"],
+                        issuer: configuration["Jwt:Issuer"],
+                        audience: configuration["Jwt:Audience"],
                         claims: claims,
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: credentials
