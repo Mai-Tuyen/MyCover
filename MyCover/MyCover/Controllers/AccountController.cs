@@ -42,11 +42,11 @@ namespace MyCover.Controllers
                 }
                 return response;
             }
-            catch (Exception e)
+            catch
             {
                 throw;
             }
-            
+
         }
 
         [HttpGet]

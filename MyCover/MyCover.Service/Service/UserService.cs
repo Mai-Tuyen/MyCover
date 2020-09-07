@@ -31,10 +31,12 @@ namespace MyCover.Service.Service
         public async Task<User> AuthenticateUser(User inputUser)
         {
             var user = await unitOfWork.Users.Get(filter: x => x.UserName == inputUser.UserName && x.Password == inputUser.Password);
+            //var courses = unitOfWork.CourseRepository.Get(includeProperties: "Department"); demo get include reference table
+            //var departmentsQuery = unitOfWork.DepartmentRepository.Get(orderBy: q => q.OrderBy(d => d.Name)); demo orderBy
             return user.SingleOrDefault();
         }
 
-        public async Task<string> GenerateJWTToken(User user)
+        public string GenerateJWTToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -53,18 +55,19 @@ namespace MyCover.Service.Service
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: credentials
                         );
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var response = new JwtSecurityTokenHandler().WriteToken(token);
+            return response;
         }
 
-        public async Task<List<User>> getListUser()
+        public async Task<List<User>> GetListUser()
         {
             var res = await unitOfWork.Users.Get();
             return res.ToList();
         }
 
-        public Task<User> getUserByID(int id)
+        public async Task<User> GetUserByID(int id)
         {
-            throw new NotImplementedException();
+            return await unitOfWork.Users.GetByID(id);
         }
     }
 }

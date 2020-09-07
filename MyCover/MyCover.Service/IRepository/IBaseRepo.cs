@@ -14,8 +14,8 @@ namespace MyCover.Service.IRepository
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = ""
             );
-        IEnumerable<TEntity> GetWithRawSql(string query, params object[] parameter);
-        TEntity GetByID(int id);
+        Task<IEnumerable<TEntity>> GetWithRawSql(string query, params object[] parameter);
+        Task<TEntity> GetByID(int id);
         void Insert(TEntity entity);
         void Update(TEntity entity);
         void Delete(int id);

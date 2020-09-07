@@ -8,10 +8,10 @@ namespace MyCover.Service.IService
 {
     public interface IUserService
     {
-        Task<List<User>> getListUser();
-        Task<User> getUserByID(int id);
+        Task<List<User>> GetListUser();
+        Task<User> GetUserByID(int id);
         void AddNewUser(User newUser);
-        Task<string> GenerateJWTToken(User user);
+        string GenerateJWTToken(User user);
         Task<User> AuthenticateUser(User user);
     }
 }

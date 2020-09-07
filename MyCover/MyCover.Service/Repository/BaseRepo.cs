@@ -39,27 +39,27 @@ namespace MyCover.Service.Repository
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return await orderBy(query).ToListAsync();
             }
             else
             {
-                return query.ToList();
+                return await query.ToListAsync();
             }
         }
 
-        public TEntity GetByID(int id)
+        public async Task<TEntity> GetByID(int id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public IEnumerable<TEntity> GetWithRawSql(string query, params object[] parameter)
+        public async Task<IEnumerable<TEntity>> GetWithRawSql(string query, params object[] parameter)
         {
-            return dbSet.FromSqlRaw(query, parameter).ToList();
+            return await dbSet.FromSqlRaw(query, parameter).ToListAsync();
         }
 
-        public void Insert(TEntity entity)
+        public async void Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            await dbSet.AddAsync(entity);
         }
 
         public void Update(TEntity entity)

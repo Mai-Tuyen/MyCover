@@ -22,9 +22,9 @@ namespace MyCover.Service.Repository
                 return _users ??= new BaseRepo<User>(_context);
             }
         }
-        public void Save()
+        public async void Save()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
