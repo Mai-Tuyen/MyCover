@@ -36,6 +36,18 @@ namespace MyCover.Service.Service
             return user.SingleOrDefault();
         }
 
+        public async Task<bool> CheckIsExistSocialAccount(User userInput)
+        {
+            var user = await unitOfWork.Users.GetByID(userInput.ID);
+            if (user == null)
+            {
+                await unitOfWork.Users.Insert(user);
+                unitOfWork.Save();
+                return false;
+            }
+            return true;
+        }
+
         public string GenerateJWTToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]));

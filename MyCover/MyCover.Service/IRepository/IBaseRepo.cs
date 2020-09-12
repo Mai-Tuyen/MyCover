@@ -16,7 +16,7 @@ namespace MyCover.Service.IRepository
             );
         Task<IEnumerable<TEntity>> GetWithRawSql(string query, params object[] parameter);
         Task<TEntity> GetByID(int id);
-        void Insert(TEntity entity);
+        Task Insert(TEntity entity);
         void Update(TEntity entity);
         void Delete(int id);
         void Delete(TEntity entity);

@@ -42,11 +42,33 @@ namespace MyCover.Controllers
                 }
                 return response;
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                throw new Exception();
             }
 
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginSocial([FromBody] User input)
+        {
+            try
+            {
+                IActionResult response = Unauthorized();
+                await userService.CheckIsExistSocialAccount(input);
+                var tokenString = userService.GenerateJWTToken(input);
+                response = Ok(new
+                {
+                    token = tokenString,
+                    userDetails = input
+                });
+                return response;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
 
         [HttpGet]

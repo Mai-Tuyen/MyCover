@@ -57,7 +57,7 @@ namespace MyCover.Service.Repository
             return await dbSet.FromSqlRaw(query, parameter).ToListAsync();
         }
 
-        public async void Insert(TEntity entity)
+        public async Task Insert(TEntity entity)
         {
             await dbSet.AddAsync(entity);
         }

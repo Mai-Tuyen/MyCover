@@ -13,5 +13,6 @@ namespace MyCover.Service.IService
         void AddNewUser(User newUser);
         string GenerateJWTToken(User user);
         Task<User> AuthenticateUser(User user);
+        Task<bool> CheckIsExistSocialAccount(User user);
     }
 }
