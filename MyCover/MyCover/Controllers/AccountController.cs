@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MyCover.Model.DTOs.ResponseDTO;
 using MyCover.Model.Entities;
 using MyCover.Service.IService;
 
@@ -25,50 +26,48 @@ namespace MyCover.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] User input)
+        public async Task<LoginResponse> Login([FromBody] User input)
         {
+            var res = new LoginResponse();
             try
             {
-                IActionResult response = Unauthorized();
                 var user = await userService.AuthenticateUser(input);
                 if (user != null)
                 {
                     var tokenString = userService.GenerateJWTToken(user);
-                    response = Ok(new
-                    {
-                        token = tokenString,
-                        userDetails = user,
-                    });
+                    res.Token = tokenString;
+                    res.UserDetails = user;
                 }
-                return response;
-            }
-            catch (Exception e)
-            {
-                throw new Exception();
-            }
 
+            }
+            catch
+            {
+                res.IsError = true;
+                res.Message = "Đã có lỗi xảy ra trong quá trình xử lý";
+
+            }
+            return res;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginSocial([FromBody] User input)
+        public async Task<LoginResponse> LoginSocial([FromBody] User input)
         {
+            var res = new LoginResponse();
             try
             {
-                IActionResult response = Unauthorized();
                 await userService.CheckIsExistSocialAccount(input);
                 var tokenString = userService.GenerateJWTToken(input);
-                response = Ok(new
-                {
-                    token = tokenString,
-                    userDetails = input
-                });
-                return response;
+
+                res.Token = tokenString;
+                res.UserDetails = input;
             }
-            catch (Exception)
+            catch
             {
-                throw new Exception();
+                res.IsError = true;
+                res.Message = "Đã có lỗi xảy ra trong quá trình xử lý";
             }
+            return res;
         }
 
         [HttpGet]
